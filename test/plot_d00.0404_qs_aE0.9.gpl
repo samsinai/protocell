@@ -1,0 +1,20 @@
+#set term x11 enhanced
+set term postscript eps 18 enhanced color
+
+set nolog x
+
+set xlabel 'q'
+set ylabel 'fraction E'
+
+set border 3
+set xtics nomirror
+set ytics nomirror
+
+#set title ''
+
+set key left Left #at 0.88,1.0
+
+set output 'plot_d00.0404_qs_aE0.9.eps'
+plot [:]\
+      'overview_d00.0404_aE0.9.txt' u 1:2 t 'cell death' w lp ls 1 #,\
+#      'overview_d00.0404_A_model2_theta.txt' u 1:2 t 'individual death' w lp ls 2
