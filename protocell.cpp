@@ -64,6 +64,8 @@ Protocell* Protocell::SplitIntoTwo(double rnd, int& seed, int splitmethod) {
   Protocell *newprotocell;
   int n = protocellcontents.size();
 
+  //cout << "splitmethod: " << splitmethod << endl;;
+
   if (n > 1) {
     newprotocell = new Protocell(-1,protocellid);
     int m;
@@ -92,6 +94,26 @@ Protocell* Protocell::SplitIntoTwo(double rnd, int& seed, int splitmethod) {
 	  }
 	}
       }
+    }
+    else if (splitmethod == DIVIDE_EQUALPERTYPE) {
+      int kk = 0;
+      //cout << "splitting: ";
+      for (int i=0; i<NRMOLTYPES; i++) {
+	//cout << nrs[i] << "->";
+	int k = (nrs[i] + kk) / 2;
+	//cout << k << " ";
+	kk = (kk + (nrs[i]%2)) % 2;
+	int j = GetTotalNumberOfMolecules() - 1;
+	while ((k > 0) && (j > -1)) {
+	  if (protocellcontents[j] == i) {
+	    int q = RemoveMoleculeAt(j);
+	    newprotocell->AddMoleculeFront(q);
+	    k--;
+	  }
+	  j--;
+	}
+      }
+      //cout << endl;
     }
     else {
       if (splitmethod == DIVIDE_RANDOM) {

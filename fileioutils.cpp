@@ -18,18 +18,19 @@ bool FileIOUtils::FileIsAscii(char* file)
     {
       throw new FileNotFoundException(file);
 
-    }
-  in = read(ifile, buf, 512);
-  if(in == 0)
-    {
-      cout << "WARNING: " << file << " is an empty file" << endl;
-      return -1;
-    }
-  for(i=0; i < in; i++) if(buf[i]&0200)
-    {
-      /* BINARY FILE */
-      return false;
-    }
+      ;    }
+  //in = read(ifile, buf, 512);
+  //if(in == 0)
+  //  {
+  //    cout << "WARNING: " << file << " is an empty file" << endl;
+  //    return -1;
+  //  }
+  //for(i=0; i < in; i++) if(buf[i]&0200)
+  //  {
+  //    /* BINARY FILE */
+  //    return false;
+  //  }
+  //  // function currently always returns true !!!!
   /* ASCII FILE */
   return true;
 }

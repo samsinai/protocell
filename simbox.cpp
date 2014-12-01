@@ -29,6 +29,7 @@ Simbox::Simbox(void) {
   splittype = DIVIDE_RANDOM;
   intcomp = 0;
   divrep = 1.0;
+  verbose = 1;
 
   prob_aA = -1.0;
   prob_aC = -1.0;
@@ -141,6 +142,9 @@ Simbox::Simbox(void) {
   }
   else if (splittype == DIVIDE_LINEARPERTYPE) {
     cout << "DIVIDE_LINEARPERTYPE";
+  }
+  else if (splittype == DIVIDE_EQUALPERTYPE) {
+    cout << "DIVIDE_EQUALPERTYPE";
   }
   else {
     cout << "DIVIDE_MANY";
@@ -339,7 +343,7 @@ void Simbox::DivideProtocell(double rnd, int cellnr, ostream& s, int it) {
       }
     }
     else {
-      mnew = m->SplitIntoTwo(rnd, seed, DIVIDE_RANDOM);
+      mnew = m->SplitIntoTwo(rnd, seed, splittype);
       mnew->protocellid = nextuid++;
 
       if (it > avgstart) {
@@ -748,6 +752,22 @@ void Simbox::ReportStatus(ostream& s, long& it) {
   s << " " << totnrmolspertype[EMOL] << " " << totnrmolspertype[FMOL];
   s << " " << nr_zs;
   s << " " << nrrevivals;
+
+  int nCD = 0;
+  int npureC = 0;
+  int npureD = 0;
+  int npureCD = 0;
+  for (int i=0; i<nrprotocells; i++) {
+    int mtot = protocells[usednrs[i]]->GetTotalNumberOfMolecules();
+    int mC = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(CMOL);
+    int mD = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(DMOL);
+    if ((mC*mD) > 0) { nCD++; }
+    if (mC == mtot) { npureC++; }
+    else if (mD == mtot) { npureD++; }
+    else if ((mC+mD) == mtot){ npureCD++; }
+  }
+  s << " " << nCD << " " << npureC << " " << npureD << " " << npureCD;
+
   s << endl;
 
   return;
