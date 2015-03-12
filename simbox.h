@@ -107,6 +107,9 @@ class Simbox {
 
   double avgcol_fractioninitvsfinal[101][101];
   double avgcol_nrABperCell[101][101];
+
+  double avgcol_mediancellsize;
+  vector<int> avgcol_curcellsizes;
 };
 
 #endif

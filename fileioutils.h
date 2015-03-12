@@ -14,10 +14,6 @@
 class FileIOUtils
 {
  public:
-    /*
-   * Checks whether the file supplied is in ascii or binary format.
-   */ 
-  static bool FileIsAscii(char*);
   /*
    * Checks whether the data supplied represents a comment, i.e.,
    * whether it starts with '#'.

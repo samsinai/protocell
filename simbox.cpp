@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include <algorithm>
 
 #include "exception.h"
 #include "simbox.h"
@@ -30,7 +31,6 @@ Simbox::Simbox(void) {
   intcomp = 0;
   divrep = 1.0;
   verbose = 1;
-
   prob_aA = -1.0;
   prob_aC = -1.0;
   prob_aD = -1.0;
@@ -154,6 +154,9 @@ Simbox::Simbox(void) {
 
   if (intcomp == 1) {
     cout << "Internal competition\n" << endl;
+  }
+  else if (intcomp == 2) {
+    cout << "Internal competition 2\n" << endl;
   }
   else {
     cout << "No internal competition\n" << endl;
@@ -536,6 +539,9 @@ double Simbox::calculate_propensities_protocell(int nr) {
     if (intcomp == 1) {
       p0 /= ntot;
     }
+    else if (intcomp == 2) {
+      p0 /= pow((double)ntot,1.0/3);
+    }
     propensities[nrpropsperprotocell*nr+0] = p0*(nA*(1+nAm1*prob_aA)*prob_q);
     propensities[nrpropsperprotocell*nr+1] = p0*(nA*(1+nAm1*prob_aA)*(1-prob_q) + 
 						 nB*(1+nA*prob_aA) + 
@@ -564,6 +570,9 @@ double Simbox::calculate_propensities_protocell(int nr) {
     double p0 = nr_zs*mfC*prob_s;
     if (intcomp == 1) {
       p0 /= ntot;
+    }
+    else if (intcomp == 2) {
+      p0 /= pow((double)ntot,1.0/3);
     }
     propensities[nrpropsperprotocell*nr+0] = p0*nA*mfAs*prob_q;
     propensities[nrpropsperprotocell*nr+1] = p0*(nA*mfAs*(1-prob_q) + 
@@ -754,19 +763,22 @@ void Simbox::ReportStatus(ostream& s, long& it) {
   s << " " << nrrevivals;
 
   int nCD = 0;
-  int npureC = 0;
-  int npureD = 0;
   int npureCD = 0;
   for (int i=0; i<nrprotocells; i++) {
-    int mtot = protocells[usednrs[i]]->GetTotalNumberOfMolecules();
+    //int mtot = protocells[usednrs[i]]->GetTotalNumberOfMolecules();
+    int mA = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(AMOL);
+    int mB = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(BMOL);
     int mC = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(CMOL);
     int mD = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(DMOL);
-    if ((mC*mD) > 0) { nCD++; }
-    if (mC == mtot) { npureC++; }
-    else if (mD == mtot) { npureD++; }
-    else if ((mC+mD) == mtot){ npureCD++; }
+    int mE = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(EMOL);
+    int mF = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(FMOL);
+    if (((mA*mC) > 0) || ((mA*mD) > 0) || ((mA*mE) > 0) || ((mA*mF) > 0) || 
+	((mC*mD) > 0) || ((mC*mE) > 0) || ((mC*mF) > 0) ||
+	((mD*mE) > 0) || ((mD*mF) > 0) || ((mE*mF) > 0)
+	) { nCD++; }
+    else if (mB == 0) { npureCD++; }
   }
-  s << " " << nCD << " " << npureC << " " << npureD << " " << npureCD;
+  s << " " << nCD << " " << npureCD;
 
   s << endl;
 
@@ -846,6 +858,9 @@ void Simbox::InitAveragesCollection(void) {
     }
   }
 
+  avgcol_mediancellsize = 0.0;
+  avgcol_curcellsizes.resize(maxnrprotocells, -1);
+
   return;
 }
 
@@ -859,8 +874,11 @@ void Simbox::UpdateAveragesCollection(int, double) {
   avgcol_nrzs += (double)nr_zs;
   avgcol_nrcells += (double)nrprotocells; 
 
+  //cout << "AAA ";
   for (int i=0; i<nrprotocells; i++) {
     int m = protocells[usednrs[i]]->GetTotalNumberOfMolecules();
+    avgcol_curcellsizes[i] = m;
+    //cout << m << " ";
     int mh = m;
     if (mh >= NRHISTBINS) { mh = NRHISTBINS; }
     avgcol_cellsizehist[mh] += 1;
@@ -907,6 +925,29 @@ void Simbox::UpdateAveragesCollection(int, double) {
       avgcol_nrspertypecellhist[j][m] += 1;
     }
   }
+  //cout << endl;
+
+  double mymedian = 10.0;
+  int myind = -1;
+
+  sort(avgcol_curcellsizes.begin(), avgcol_curcellsizes.begin()+nrprotocells);
+  //cout << "BBB ";
+  //for (int i=0; i<nrprotocells; i++) {
+  //  cout << avgcol_curcellsizes[i] << " ";
+  //}
+  //cout << endl;
+
+  if ((nrprotocells % 2) == 0) {
+    myind = nrprotocells/2;
+    mymedian = (avgcol_curcellsizes[myind-1] + avgcol_curcellsizes[myind]) / 2;
+}
+  else {
+    myind = (nrprotocells-1)/2;
+    mymedian = avgcol_curcellsizes[myind];
+  }
+  //cout << "CCC " << myind << " " << mymedian << endl;
+
+  avgcol_mediancellsize += mymedian;
 
   return;
 }
@@ -932,6 +973,8 @@ void Simbox::ReportAveragesCollection(void) {
   of << "<nrcells1C>:\t" << avgcol_nrcells1C*tval << endl;
   of << "<nrcellsmultipleC>:\t" << avgcol_nrcellsmC*tval << endl;
   of << "<nrcellspureC>:\t" << avgcol_nrcellspC*tval << endl;
+
+  of << "<median_cell_size>:\t" << avgcol_mediancellsize*tval << endl;
 
   of.close();
 
