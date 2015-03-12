@@ -775,8 +775,10 @@ void Simbox::ReportStatus(ostream& s, long& it) {
     if (((mA*mC) > 0) || ((mA*mD) > 0) || ((mA*mE) > 0) || ((mA*mF) > 0) || 
 	((mC*mD) > 0) || ((mC*mE) > 0) || ((mC*mF) > 0) ||
 	((mD*mE) > 0) || ((mD*mF) > 0) || ((mE*mF) > 0)
-	) { nCD++; }
-    if (mB == 0) { npureCD++; }
+	) { 
+      nCD++; 
+      if (mB == 0) { npureCD++; }
+    }
   }
   s << " " << nCD << " " << npureCD;
 
