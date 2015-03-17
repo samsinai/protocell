@@ -762,8 +762,11 @@ void Simbox::ReportStatus(ostream& s, long& it) {
   s << " " << nr_zs;
   s << " " << nrrevivals;
 
-  int nCD = 0;
-  int npureCD = 0;
+  int nCoop = 0;
+  int npureCoop = 0;
+
+  int nMultCoop = 0;
+  int npureMultCoop = 0;
   for (int i=0; i<nrprotocells; i++) {
     //int mtot = protocells[usednrs[i]]->GetTotalNumberOfMolecules();
     int mA = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(AMOL);
@@ -772,15 +775,20 @@ void Simbox::ReportStatus(ostream& s, long& it) {
     int mD = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(DMOL);
     int mE = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(EMOL);
     int mF = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(FMOL);
-    if (((mA*mC) > 0) || ((mA*mD) > 0) || ((mA*mE) > 0) || ((mA*mF) > 0) || 
+     if ( (mA > 0) || (mC > 0) || (mD > 0) || (mE > 0) || (mF > 0) ) { 
+      nCoop++; 
+      if (mB == 0) { npureCoop++; }
+    }
+   if (((mA*mC) > 0) || ((mA*mD) > 0) || ((mA*mE) > 0) || ((mA*mF) > 0) || 
 	((mC*mD) > 0) || ((mC*mE) > 0) || ((mC*mF) > 0) ||
 	((mD*mE) > 0) || ((mD*mF) > 0) || ((mE*mF) > 0)
 	) { 
-      nCD++; 
-      if (mB == 0) { npureCD++; }
+      nMultCoop++; 
+      if (mB == 0) { npureMultCoop++; }
     }
   }
-  s << " " << nCD << " " << npureCD;
+  s << " " << nCoop << " " << npureCoop;
+  s << " " << nMultCoop << " " << npureMultCoop;
 
   s << endl;
 
