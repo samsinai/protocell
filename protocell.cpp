@@ -64,11 +64,8 @@ Protocell* Protocell::SplitIntoTwo(double rnd, int& seed, int splitmethod) {
   Protocell *newprotocell;
   int n = protocellcontents.size();
 
-<<<<<<< HEAD
-=======
   //cout << "splitmethod: " << splitmethod << endl;;
 
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   if (n > 1) {
     newprotocell = new Protocell(-1,protocellid);
     int m;
@@ -98,8 +95,6 @@ Protocell* Protocell::SplitIntoTwo(double rnd, int& seed, int splitmethod) {
 	}
       }
     }
-<<<<<<< HEAD
-=======
     else if (splitmethod == DIVIDE_EQUALPERTYPE) {
       int kk = 0;
       //cout << "splitting: ";
@@ -120,7 +115,6 @@ Protocell* Protocell::SplitIntoTwo(double rnd, int& seed, int splitmethod) {
       }
       //cout << endl;
     }
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
     else {
       if (splitmethod == DIVIDE_RANDOM) {
 	vector<double> v(n,0);
