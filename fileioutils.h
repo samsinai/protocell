@@ -14,13 +14,10 @@
 class FileIOUtils
 {
  public:
-<<<<<<< HEAD
     /*
    * Checks whether the file supplied is in ascii or binary format.
    */ 
   static bool FileIsAscii(char*);
-=======
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   /*
    * Checks whether the data supplied represents a comment, i.e.,
    * whether it starts with '#'.
