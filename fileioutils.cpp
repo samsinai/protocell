@@ -1,10 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
-<<<<<<< HEAD
-#include <unistd.h>
-=======
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
 #include "exception.h"
 #include "fileioutils.h"
 
