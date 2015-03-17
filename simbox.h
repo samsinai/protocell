@@ -106,6 +106,7 @@ class Simbox {
   double avgcol_fractionafterdivision[101];
 
   double avgcol_fractioninitvsfinal[101][101];
+<<<<<<< HEAD
  
   double avgcol_nrABperCell[101][101];
   double avgcol_nrACperCell[101][101];
@@ -136,6 +137,12 @@ class Simbox {
 
 //  double all_ABCDEF[101][101][101][101][101][101][101];
 
+=======
+  double avgcol_nrABperCell[101][101];
+
+  double avgcol_mediancellsize;
+  vector<int> avgcol_curcellsizes;
+>>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
 };
 
 #endif

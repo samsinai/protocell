@@ -19,5 +19,9 @@
 #define DIVIDE_LINEAR 2
 #define DIVIDE_LINEARPERTYPE 3
 #define DIVIDE_MANY 4
+<<<<<<< HEAD
+=======
+#define DIVIDE_EQUALPERTYPE 5
+>>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
 
 #define NRHISTBINS 1000

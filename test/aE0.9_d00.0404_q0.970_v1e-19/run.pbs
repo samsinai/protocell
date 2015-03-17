@@ -1,0 +1,33 @@
+#!/bin/sh
+
+#PBS -l nodes=1:ppn=1
+
+### Job name
+#PBS -N protocell
+
+### Queue name
+###PBS -q workq
+
+#PBS -o stdout
+#PBS -e stderr
+
+### Script Commands
+cd $PBS_O_WORKDIR
+
+### Write info about nodes used
+
+NCPU=`wc -l < $PBS_NODEFILE`
+NNODES=`uniq $PBS_NODEFILE | wc -l`
+
+echo
+echo 'PBS_NODEFILE ' $PBS_NODEFILE ' has ' $NCPU ' lines on ' $NNODES ' nodes'
+cat $PBS_NODEFILE
+echo
+
+export P4_GLOBMEMSIZE=16777216
+
+# This is the test itself.  See?  It's really short.  <sigh>
+~/protocell/version3.1.1/protocell
+
+echo
+exit 0
