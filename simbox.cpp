@@ -2,10 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-<<<<<<< HEAD
-=======
 #include <algorithm>
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
 
 #include "exception.h"
 #include "simbox.h"
@@ -33,11 +30,8 @@ Simbox::Simbox(void) {
   splittype = DIVIDE_RANDOM;
   intcomp = 0;
   divrep = 1.0;
-<<<<<<< HEAD
 
-=======
   verbose = 1;
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   prob_aA = -1.0;
   prob_aC = -1.0;
   prob_aD = -1.0;
@@ -150,12 +144,9 @@ Simbox::Simbox(void) {
   else if (splittype == DIVIDE_LINEARPERTYPE) {
     cout << "DIVIDE_LINEARPERTYPE";
   }
-<<<<<<< HEAD
-=======
   else if (splittype == DIVIDE_EQUALPERTYPE) {
     cout << "DIVIDE_EQUALPERTYPE";
   }
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   else {
     cout << "DIVIDE_MANY";
   }
@@ -165,12 +156,9 @@ Simbox::Simbox(void) {
   if (intcomp == 1) {
     cout << "Internal competition\n" << endl;
   }
-<<<<<<< HEAD
-=======
   else if (intcomp == 2) {
     cout << "Internal competition 2\n" << endl;
   }
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   else {
     cout << "No internal competition\n" << endl;
   }
@@ -359,11 +347,7 @@ void Simbox::DivideProtocell(double rnd, int cellnr, ostream& s, int it) {
       }
     }
     else {
-<<<<<<< HEAD
-      mnew = m->SplitIntoTwo(rnd, seed, DIVIDE_RANDOM);
-=======
       mnew = m->SplitIntoTwo(rnd, seed, splittype);
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
       mnew->protocellid = nextuid++;
 
       if (it > avgstart) {
@@ -556,12 +540,9 @@ double Simbox::calculate_propensities_protocell(int nr) {
     if (intcomp == 1) {
       p0 /= ntot;
     }
-<<<<<<< HEAD
-=======
     else if (intcomp == 2) {
       p0 /= pow((double)ntot,1.0/3);
     }
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
     propensities[nrpropsperprotocell*nr+0] = p0*(nA*(1+nAm1*prob_aA)*prob_q);
     propensities[nrpropsperprotocell*nr+1] = p0*(nA*(1+nAm1*prob_aA)*(1-prob_q) + 
 						 nB*(1+nA*prob_aA) + 
@@ -591,12 +572,9 @@ double Simbox::calculate_propensities_protocell(int nr) {
     if (intcomp == 1) {
       p0 /= ntot;
     }
-<<<<<<< HEAD
-=======
     else if (intcomp == 2) {
       p0 /= pow((double)ntot,1.0/3);
     }
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
     propensities[nrpropsperprotocell*nr+0] = p0*nA*mfAs*prob_q;
     propensities[nrpropsperprotocell*nr+1] = p0*(nA*mfAs*(1-prob_q) + 
 						 nB*mfAo +
@@ -736,15 +714,8 @@ void Simbox::RunSimulation(void) {
       //if (it>4990000) cout << "ddd " << endl;
       
       if (it >= avgrepnext) {
-<<<<<<< HEAD
-//  cout << " got in " << endl;
 	UpdateAveragesCollection(it, deltatime);
   avgrepnext += avgrep;
- // cout << "got out" <<endl;
-=======
-	UpdateAveragesCollection(it, deltatime);
-	avgrepnext += avgrep;
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
       }
       //if (it>4990000) cout << "eee " << endl;
       
@@ -774,13 +745,7 @@ void Simbox::RunSimulation(void) {
     lf.close(); // close reaction log file
   }
   if (avgrep != -1) {
-<<<<<<< HEAD
- //   cout << "gotin2" << endl;
     ReportAveragesCollection();
-  //  cout << "gotin2" << endl;
-=======
-    ReportAveragesCollection();
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   }
 
   FileIO::DumpSystem(this, it);
@@ -797,8 +762,6 @@ void Simbox::ReportStatus(ostream& s, long& it) {
   s << " " << totnrmolspertype[EMOL] << " " << totnrmolspertype[FMOL];
   s << " " << nr_zs;
   s << " " << nrrevivals;
-<<<<<<< HEAD
-=======
 
   int nCoop = 0;
   int npureCoop = 0;
@@ -828,7 +791,6 @@ void Simbox::ReportStatus(ostream& s, long& it) {
   s << " " << nCoop << " " << npureCoop;
   s << " " << nMultCoop << " " << npureMultCoop;
 
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   s << endl;
 
   return;
@@ -881,7 +843,6 @@ void Simbox::InitAveragesCollection(void) {
     avgcol_fractionafterdivision[i] = 0.0;
 
     for (int j=0; j<101; j++){
-<<<<<<< HEAD
 
       avgcol_fractioninitvsfinal[i][j] = 0.0;
 
@@ -914,10 +875,6 @@ void Simbox::InitAveragesCollection(void) {
       avgcol_nrnonD_FperCell[i][j]=0.0;
 
 
-=======
-      avgcol_fractioninitvsfinal[i][j] = 0.0;
-      avgcol_nrABperCell[i][j] = 0.0;
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
     }
   }
 
@@ -942,48 +899,34 @@ void Simbox::InitAveragesCollection(void) {
     }
   }
 
-<<<<<<< HEAD
-=======
   avgcol_mediancellsize = 0.0;
   avgcol_curcellsizes.resize(maxnrprotocells, -1);
 
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   return;
 }
 
 
 void Simbox::UpdateAveragesCollection(int, double) {
   nrhistupdates++;
-<<<<<<< HEAD
   //cout << __LINE__;
 
   for (int i=0; i<NRMOLTYPES; i++) {
     avgcol_totnrs[i] += (double)totnrmolspertype[i];
    // cout << NRMOLTYPES;
-=======
 
-  for (int i=0; i<NRMOLTYPES; i++) {
-    avgcol_totnrs[i] += (double)totnrmolspertype[i];
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   }
   avgcol_nrzs += (double)nr_zs;
   avgcol_nrcells += (double)nrprotocells; 
 
-<<<<<<< HEAD
-  for (int i=0; i<nrprotocells; i++) {
-    int m = protocells[usednrs[i]]->GetTotalNumberOfMolecules();
-=======
   //cout << "AAA ";
   for (int i=0; i<nrprotocells; i++) {
     int m = protocells[usednrs[i]]->GetTotalNumberOfMolecules();
     avgcol_curcellsizes[i] = m;
     //cout << m << " ";
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
     int mh = m;
     if (mh >= NRHISTBINS) { mh = NRHISTBINS; }
     avgcol_cellsizehist[mh] += 1;
     int nrB = protocells[usednrs[i]]->GetNumberOfMoleculesOfType(1);
-<<<<<<< HEAD
     int nrA=protocells[usednrs[i]]->GetNumberOfMoleculesOfType(0); //new
     int nrC=protocells[usednrs[i]]->GetNumberOfMoleculesOfType(2); //new
     int nrD=protocells[usednrs[i]]->GetNumberOfMoleculesOfType(3); //new
@@ -1095,7 +1038,6 @@ void Simbox::UpdateAveragesCollection(int, double) {
     avgcol_nrnonD_FperCell[adjusted_nonF][adjusted_F]+=1;
 
     //all_ABCDEF[adjusted_A][adjusted_B][adjusted_C][adjusted_D][adjusted_E][adjusted_F]+=1;
-=======
     int nrnonB = m - nrB;
 
     //added by sam 
@@ -1113,16 +1055,11 @@ void Simbox::UpdateAveragesCollection(int, double) {
         adjusted_B=100;
     }
     avgcol_nrABperCell[adjusted_nonB][adjusted_B]+=1;
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   
     mh = m;
     if (mh >= NRHISTBINS) { mh = NRHISTBINS; }
     if (nrnonB == 0) { 
-<<<<<<< HEAD
-      avgcol_cellsizehist0A[mh] += 1; //how many cells of this size are present 
-=======
       avgcol_cellsizehist0A[mh] += 1; 
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
       avgcol_nrcells0C += 1;
     }
     else if (nrnonB == 1) { 
@@ -1143,8 +1080,6 @@ void Simbox::UpdateAveragesCollection(int, double) {
       avgcol_nrspertypecellhist[j][m] += 1;
     }
   }
-<<<<<<< HEAD
-=======
   //cout << endl;
 
   double mymedian = 10.0;
@@ -1168,7 +1103,6 @@ void Simbox::UpdateAveragesCollection(int, double) {
   //cout << "CCC " << myind << " " << mymedian << endl;
 
   avgcol_mediancellsize += mymedian;
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
 
   return;
 }
@@ -1177,11 +1111,8 @@ void Simbox::UpdateAveragesCollection(int, double) {
 void Simbox::ReportAveragesCollection(void) {
   fstream of;
   double tval = 1.0/((double)nrhistupdates);
-<<<<<<< HEAD
   cout << __LINE__ ;
-=======
 
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
 
   of.open("averages.pco", ios::out);
   if(!of.is_open()) {
@@ -1199,11 +1130,8 @@ void Simbox::ReportAveragesCollection(void) {
   of << "<nrcellsmultipleC>:\t" << avgcol_nrcellsmC*tval << endl;
   of << "<nrcellspureC>:\t" << avgcol_nrcellspC*tval << endl;
 
-<<<<<<< HEAD
-=======
   of << "<median_cell_size>:\t" << avgcol_mediancellsize*tval << endl;
 
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   of.close();
 
 
@@ -1211,7 +1139,6 @@ void Simbox::ReportAveragesCollection(void) {
   if(!of.is_open()) {
     throw new Exception("Could not open file 'cellcontents.cmo'.");
   }
-<<<<<<< HEAD
   
   of << "#nrAB" << endl;
   for (int i=0; i<101; i++) {
@@ -1331,20 +1258,12 @@ of << "#nrEF" << endl;
   for (int i=0; i<101; i++) {
     for (int j=0; j<101; j++){
       of <<  avgcol_nrEFperCell[i][j]*tval <<"\t";
-=======
 
-  for (int i=0; i<101; i++) {
-    for (int j=0; j<101; j++){
-      of <<  avgcol_nrABperCell[i][j]*tval <<"\t";
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
     } 
     of << endl;
   }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
   of.close();
 
 
