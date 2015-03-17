@@ -1038,15 +1038,8 @@ void Simbox::UpdateAveragesCollection(int, double) {
     avgcol_nrnonD_FperCell[adjusted_nonF][adjusted_F]+=1;
 
     //all_ABCDEF[adjusted_A][adjusted_B][adjusted_C][adjusted_D][adjusted_E][adjusted_F]+=1;
-    int nrnonB = m - nrB;
 
-    //added by sam 
-    int adjusted_nonB=nrnonB;
-    //int adjusted_m=m;
-    int adjusted_B=m-nrnonB;
 
-    double myfract = (100.0*nrnonB)/m;
-    avgcol_fractionpresent[(int)myfract] += 1;
     
     if (adjusted_nonB>100){
         adjusted_nonB=100;

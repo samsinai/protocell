@@ -1,12 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
+#include <unistd.h>
 #include "exception.h"
 #include "fileioutils.h"
 
 using namespace std;
 
-<<<<<<< HEAD
 /* Find out if a file is binary or text stream */
 // taken from PumMa
 bool FileIOUtils::FileIsAscii(char* file)
@@ -35,8 +35,6 @@ bool FileIOUtils::FileIsAscii(char* file)
   return true;
 }
 
-=======
->>>>>>> 1e14aa9cd361d15fa8e0e0f7ebbd0b81c674e323
 void FileIOUtils::NotifyFileReading(char* fname)
 {
   cout << "Reading file " << fname << "." << endl;
