@@ -1,2 +1,1 @@
-protocell
-=========
+Gillespie simulation of protocell dynamics
